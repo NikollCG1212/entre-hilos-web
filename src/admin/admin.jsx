@@ -1,7 +1,26 @@
 import { useState } from 'react';
 import './admin.css';
 
+const categoriasProducto = [
+  'Pulseras',
+  'Aretes',
+  'Llaveros',
+  'Bolsos y accesorios',
+  'Collares',
+  'Regalos y combos',
+];
 function Admin({ onVolver }) {
+  const [productos, setProductos] = useState([]);
+
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+
+  const [nuevoProducto, setNuevoProducto] = useState({
+    nombre: '',
+    categoria: 'Pulseras',
+    precio: '',
+    descripcion: '',
+    estado: 'Borrador',
+  });
   const [seccion, setSeccion] = useState('productos');
 
   const opciones = [
@@ -99,7 +118,7 @@ function Admin({ onVolver }) {
             <span className="admin-stat-icono">◇</span>
             <div>
               <p>Productos registrados</p>
-              <strong>0</strong>
+              <strong>{productos.length}</strong>
             </div>
           </article>
 
@@ -107,7 +126,7 @@ function Admin({ onVolver }) {
             <span className="admin-stat-icono">♡</span>
             <div>
               <p>Productos publicados</p>
-              <strong>0</strong>
+              <strong>{productos.filter((producto) => producto.estado === 'Publicado').length}</strong>
             </div>
           </article>
 
@@ -115,7 +134,7 @@ function Admin({ onVolver }) {
             <span className="admin-stat-icono">✿</span>
             <div>
               <p>Categorías</p>
-              <strong>0</strong>
+              <strong>{new Set(productos.map((producto) => producto.categoria)).size}</strong>
             </div>
           </article>
         </section>
@@ -140,17 +159,141 @@ function Admin({ onVolver }) {
             {seccion === 'productos' && (
               <button
                 className="admin-boton-principal"
-                onClick={() =>
-                  alert(
-                    '¡Pronto habilitaremos el formulario para registrar productos!'
-                  )
-                }
+                onClick={() => setMostrarFormulario(true)}
               >
                 + Nuevo producto
               </button>
             )}
           </div>
+          {mostrarFormulario && (
+            <form
+              className="admin-formulario"
+              onSubmit={(e) => {
+                e.preventDefault();
 
+                const producto = {
+                  id: Date.now(),
+                  ...nuevoProducto,
+                  precio: Number(nuevoProducto.precio),
+                };
+
+                setProductos((anteriores) => [...anteriores, producto]);
+
+                setNuevoProducto({
+                  nombre: '',
+                  categoria: 'Pulseras',
+                  precio: '',
+                  descripcion: '',
+                  estado: 'Borrador',
+                });
+
+                setMostrarFormulario(false);
+              }}
+            >
+              <h3>Registrar una nueva creación</h3>
+              <p>Agrega los detalles de tu producto para organizar tu catálogo.</p>
+
+              <div className="admin-formulario-campos">
+                <label>
+                  Nombre del producto
+                  <input
+                    type="text"
+                    value={nuevoProducto.nombre}
+                    onChange={(e) =>
+                      setNuevoProducto({
+                        ...nuevoProducto,
+                        nombre: e.target.value,
+                      })
+                    }
+                    placeholder="Ej. Pulsera tejida personalizada"
+                    required
+                  />
+                </label>
+
+                <label>
+                  Categoría
+                  <select
+                    value={nuevoProducto.categoria}
+                    onChange={(e) =>
+                      setNuevoProducto({
+                        ...nuevoProducto,
+                        categoria: e.target.value,
+                      })
+                    }
+                  >
+                    {categoriasProducto.map((categoria) => (
+                      <option key={categoria} value={categoria}>
+                        {categoria}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label>
+                  Precio (COP)
+                  <input
+                    type="number"
+                    min="1"
+                    step="1"
+                    value={nuevoProducto.precio}
+                    onChange={(e) =>
+                      setNuevoProducto({
+                        ...nuevoProducto,
+                        precio: e.target.value,
+                      })
+                    }
+                    placeholder="Ej. 15000"
+                    required
+                  />
+                </label>
+
+                <label>
+                  Estado del producto
+                  <select
+                    value={nuevoProducto.estado}
+                    onChange={(e) =>
+                      setNuevoProducto({
+                        ...nuevoProducto,
+                        estado: e.target.value,
+                      })
+                    }
+                  >
+                    <option value="Borrador">Borrador</option>
+                    <option value="Publicado">Publicado</option>
+                  </select>
+                </label>
+
+                <label className="admin-campo-completo">
+                  Descripción
+                  <textarea
+                    value={nuevoProducto.descripcion}
+                    onChange={(e) =>
+                      setNuevoProducto({
+                        ...nuevoProducto,
+                        descripcion: e.target.value,
+                      })
+                    }
+                    placeholder="Cuéntanos qué hace especial esta creación..."
+                    rows="3"
+                  />
+                </label>
+              </div>
+
+              <div className="admin-formulario-acciones">
+                <button
+                  type="button"
+                  className="admin-boton-cancelar"
+                  onClick={() => setMostrarFormulario(false)}
+                >
+                  Cancelar
+                </button>
+
+                <button type="submit" className="admin-boton-principal">
+                  Guardar producto
+                </button>
+              </div>
+            </form>
+          )}
           <div className="admin-tabla-encabezado">
             <span>PRODUCTO</span>
             <span>CATEGORÍA</span>
@@ -158,15 +301,48 @@ function Admin({ onVolver }) {
             <span>ESTADO</span>
           </div>
 
-          <div className="admin-vacio">
-            <span className="admin-vacio-icono">♡</span>
-            <h3>Tu catálogo comienza aquí</h3>
-            <p>
-              Cuando conectemos el registro de productos, podrás gestionar
-              sus nombres, precios, descripciones, fotografías y publicación
-              desde este espacio.
-            </p>
-          </div>
+          {productos.length === 0 ? (
+            <div className="admin-vacio">
+              <span className="admin-vacio-icono">♡</span>
+              <h3>Tu catálogo comienza aquí</h3>
+              <p>
+                Tus creaciones aparecerán aquí cuando registres tu primer producto.
+              </p>
+            </div>
+          ) : (
+            <div className="admin-lista-productos">
+              {productos.map((producto) => (
+                <div className="admin-fila-producto" key={producto.id}>
+                  <div>
+                    <strong>{producto.nombre}</strong>
+                    <small>
+                      {producto.descripcion || 'Sin descripción'}
+                    </small>
+                  </div>
+
+                  <span>{producto.categoria}</span>
+
+                  <span>
+                    {producto.precio.toLocaleString('es-CO', {
+                      style: 'currency',
+                      currency: 'COP',
+                      maximumFractionDigits: 0,
+                    })}
+                  </span>
+
+                  <span
+                    className={
+                      producto.estado === 'Publicado'
+                        ? 'admin-estado publicado'
+                        : 'admin-estado borrador'
+                    }
+                  >
+                    {producto.estado}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
         <footer className="admin-footer">
