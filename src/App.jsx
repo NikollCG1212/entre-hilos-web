@@ -74,7 +74,7 @@ const categorias = [
     ],
   },
 ];
-
+const productos =[]
 function App() {
   const [categoriaSeleccionada, setCategoriaSeleccionada] =
     useState(null);
