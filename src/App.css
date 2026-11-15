@@ -1103,3 +1103,42 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
+/* Botón de acceso al panel administrativo */
+.boton-admin-acceso {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 19px;
+
+  border: 1px solid #d9c6bc;
+  border-radius: 3px;
+
+  background: transparent;
+  color: #302b2b;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: none;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.boton-admin-acceso:hover {
+  background: #302b2b;
+  color: #fffdf9;
+  border-color: #302b2b;
+}
+
+.boton-admin-acceso:focus-visible {
+  outline: 2px solid #20bfc3;
+  outline-offset: 3px;
+}

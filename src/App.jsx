@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import './App.css';
+import Admin from './admin/admin.jsx';
+
 
 const categorias = [
   {
@@ -74,13 +76,15 @@ const categorias = [
     ],
   },
 ];
-const productos =[]
+const productos = []
 function App() {
-  const [categoriaSeleccionada, setCategoriaSeleccionada] =
-    useState(null);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
+  const [subcategoriaSeleccionada, setSubcategoriaSeleccionada] = useState(null);
+  const [vistaAdmin, setVistaAdmin] = useState(false);
 
-  const [subcategoriaSeleccionada, setSubcategoriaSeleccionada] =
-    useState(null);
+  if (vistaAdmin) {
+    return <Admin onVolver={() => setVistaAdmin(false)} />;
+  }
 
   return (
     <main>
@@ -100,6 +104,13 @@ function App() {
           <a href="#contacto" className="boton-nav">
             Hablemos ↗
           </a>
+          <button
+            type="button"
+            className="boton-admin-acceso"
+            onClick={() => setVistaAdmin(true)}
+          >
+            Panel administrativo ↗
+          </button>
         </nav>
       </header>
 
