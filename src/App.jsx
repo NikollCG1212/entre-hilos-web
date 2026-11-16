@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Admin from './admin/admin.jsx';
 
@@ -77,7 +77,25 @@ const categorias = [
   },
 ];
 function App() {
-  const [productos, setProductos] = useState([]);
+  const [productos, setProductos] = useState(() => {
+    try {
+      const productosGuardados = localStorage.getItem(
+        'entreHilosProductos'
+      );
+
+      return productosGuardados
+        ? JSON.parse(productosGuardados)
+        : [];
+    } catch {
+      return [];
+    }
+  });
+  useEffect(() => {
+    localStorage.setItem(
+      'entreHilosProductos',
+      JSON.stringify(productos)
+    );
+  }, [productos]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [subcategoriaSeleccionada, setSubcategoriaSeleccionada] = useState(null);
   const [vistaAdmin, setVistaAdmin] = useState(false);
@@ -272,60 +290,60 @@ function App() {
               </div>
             ) : (
               <div className="productos-pendientes">
-              <h4>{subcategoriaSeleccionada.nombre}</h4>
-            
-              {productos.filter(
-                (producto) =>
-                  producto.categoria === categoriaSeleccionada.nombre &&
-                  producto.subcategoria === subcategoriaSeleccionada.id &&
-                  producto.estado === 'Publicado'
-              ).length > 0 ? (
-                <div className="productos-grid">
-                  {productos
-                    .filter(
-                      (producto) =>
-                        producto.categoria === categoriaSeleccionada.nombre &&
-                        producto.subcategoria === subcategoriaSeleccionada.id &&
-                        producto.estado === 'Publicado'
-                    )
-                    .map((producto) => (
-                      <article className="producto-card" key={producto.id}>
-                        <div className="producto-imagen-pendiente">
-                          ♡
-                        </div>
-            
-                        <h5>{producto.nombre}</h5>
-            
-                        <p>{producto.descripcion}</p>
-            
-                        <strong>
-                          {producto.precio.toLocaleString('es-CO', {
-                            style: 'currency',
-                            currency: 'COP',
-                            maximumFractionDigits: 0,
-                          })}
-                        </strong>
-                      </article>
-                    ))}
-                </div>
-              ) : (
-                <div className="nota-catalogo">
-                  <span className="simbolo-pendiente">♡</span>
-                  <p>Pronto encontrarás aquí nuestros diseños.</p>
-                  <p>
-                    Estamos preparando creaciones especiales para ti.
-                  </p>
-                </div>
-              )}
-            
-              <button
-                type="button"
-                className="volver-catalogo"
-                onClick={() => setSubcategoriaSeleccionada(null)}
-              >
-                ← Volver a las subcategorías
-              </button>
-            </div> 
+                <h4>{subcategoriaSeleccionada.nombre}</h4>
+
+                {productos.filter(
+                  (producto) =>
+                    producto.categoria === categoriaSeleccionada.nombre &&
+                    producto.subcategoria === subcategoriaSeleccionada.id &&
+                    producto.estado === 'Publicado'
+                ).length > 0 ? (
+                  <div className="productos-grid">
+                    {productos
+                      .filter(
+                        (producto) =>
+                          producto.categoria === categoriaSeleccionada.nombre &&
+                          producto.subcategoria === subcategoriaSeleccionada.id &&
+                          producto.estado === 'Publicado'
+                      )
+                      .map((producto) => (
+                        <article className="producto-card" key={producto.id}>
+                          <div className="producto-imagen-pendiente">
+                            ♡
+                          </div>
+
+                          <h5>{producto.nombre}</h5>
+
+                          <p>{producto.descripcion}</p>
+
+                          <strong>
+                            {producto.precio.toLocaleString('es-CO', {
+                              style: 'currency',
+                              currency: 'COP',
+                              maximumFractionDigits: 0,
+                            })}
+                          </strong>
+                        </article>
+                      ))}
+                  </div>
+                ) : (
+                  <div className="nota-catalogo">
+                    <span className="simbolo-pendiente">♡</span>
+                    <p>Pronto encontrarás aquí nuestros diseños.</p>
+                    <p>
+                      Estamos preparando creaciones especiales para ti.
+                    </p>
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  className="volver-catalogo"
+                  onClick={() => setSubcategoriaSeleccionada(null)}
+                >
+                  ← Volver a las subcategorías
+                </button>
+              </div>
             )}
           </div>
         )}
