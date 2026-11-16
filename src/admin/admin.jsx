@@ -11,6 +11,31 @@ const categoriasProducto = [
 ];
 function Admin({ onVolver }) {
   const [productos, setProductos] = useState([]);
+  const [productoEditando, setProductoEditando] = useState(null);
+  const editarProducto = (producto) => {
+    setNuevoProducto({
+      nombre: producto.nombre,
+      categoria: producto.categoria,
+      precio: String(producto.precio),
+      descripcion: producto.descripcion,
+      estado: producto.estado,
+    });
+
+    setProductoEditando(producto.id);
+    setMostrarFormulario(true);
+  };
+
+  const eliminarProducto = (id) => {
+    const confirmar = window.confirm(
+      '¿Estás segura de que deseas eliminar este producto?'
+    );
+
+    if (!confirmar) return;
+
+    setProductos((anteriores) =>
+      anteriores.filter((producto) => producto.id !== id)
+    );
+  };
 
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
@@ -172,12 +197,20 @@ function Admin({ onVolver }) {
                 e.preventDefault();
 
                 const producto = {
-                  id: Date.now(),
+                  id: productoEditando ?? Date.now(),
                   ...nuevoProducto,
                   precio: Number(nuevoProducto.precio),
                 };
 
-                setProductos((anteriores) => [...anteriores, producto]);
+                if (productoEditando !== null) {
+                  setProductos((anteriores) =>
+                    anteriores.map((anterior) =>
+                      anterior.id === productoEditando ? producto : anterior
+                    )
+                  );
+                } else {
+                  setProductos((anteriores) => [...anteriores, producto]);
+                }
 
                 setNuevoProducto({
                   nombre: '',
@@ -186,7 +219,7 @@ function Admin({ onVolver }) {
                   descripcion: '',
                   estado: 'Borrador',
                 });
-
+                setProductoEditando(null);
                 setMostrarFormulario(false);
               }}
             >
@@ -339,6 +372,20 @@ function Admin({ onVolver }) {
                   >
                     {producto.estado}
                   </span>
+                  <button
+                    type="button"
+                    className="admin-boton-editar"
+                    onClick={() => editarProducto(producto)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-boton-eliminar"
+                    onClick={() => eliminarProducto(producto.id)}
+                  >
+                    Eliminar
+                  </button>
                 </div>
               ))}
             </div>
