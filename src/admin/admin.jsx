@@ -9,13 +9,13 @@ const categoriasProducto = [
   'Collares',
   'Regalos y combos',
 ];
-function Admin({ onVolver }) {
-  const [productos, setProductos] = useState([]);
+function Admin({ onVolver, productos, setProductos, categorias }) {
   const [productoEditando, setProductoEditando] = useState(null);
   const editarProducto = (producto) => {
     setNuevoProducto({
       nombre: producto.nombre,
       categoria: producto.categoria,
+      subcategoria: producto.subcategoria || '',
       precio: String(producto.precio),
       descripcion: producto.descripcion,
       estado: producto.estado,
@@ -42,6 +42,7 @@ function Admin({ onVolver }) {
   const [nuevoProducto, setNuevoProducto] = useState({
     nombre: '',
     categoria: 'Pulseras',
+    subcategoria: ' ',
     precio: '',
     descripcion: '',
     estado: 'Borrador',
@@ -215,6 +216,7 @@ function Admin({ onVolver }) {
                 setNuevoProducto({
                   nombre: '',
                   categoria: 'Pulseras',
+                  subcategoria: '',
                   precio: '',
                   descripcion: '',
                   estado: 'Borrador',
@@ -251,12 +253,37 @@ function Admin({ onVolver }) {
                       setNuevoProducto({
                         ...nuevoProducto,
                         categoria: e.target.value,
+                        subcategoria: '',
                       })
                     }
                   >
                     {categoriasProducto.map((categoria) => (
                       <option key={categoria} value={categoria}>
                         {categoria}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Subcategoría
+                  <select
+                    value={nuevoProducto.subcategoria}
+                    onChange={(e) =>
+                      setNuevoProducto({
+                        ...nuevoProducto,
+                        subcategoria: e.target.value,
+                      })
+                    }
+                  >
+                    <option value="">Selecciona una subcategoría</option>
+
+                    {(
+                      categorias.find(
+                        (cat) => cat.nombre === nuevoProducto.categoria
+                      )?.subcategorias ?? []
+                    ).map((subcategoria) => (
+                      <option key={subcategoria.id} value={subcategoria.id}>
+                        {subcategoria.nombre}
                       </option>
                     ))}
                   </select>
