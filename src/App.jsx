@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import Admin from './admin/admin.jsx';
-
+import { supabase } from './lib/supabase';
 
 const categorias = [
   {
@@ -100,7 +100,22 @@ function App() {
   const [subcategoriaSeleccionada, setSubcategoriaSeleccionada] = useState(null);
   const [vistaAdmin, setVistaAdmin] = useState(false);
 
+  useEffect(() => {
+    const comprobarConexion = async () => {
+      const { error } = await supabase
+        .from('productos')
+        .select('id')
+        .limit(1);
 
+      if (error) {
+        console.error('Error al conectar con Supabase:', error.message);
+      } else {
+        console.log('💗 ¡Entre Hilos está conectado con Supabase!');
+      }
+    };
+
+    comprobarConexion();
+  }, []);
   if (vistaAdmin) {
     return (
       <Admin

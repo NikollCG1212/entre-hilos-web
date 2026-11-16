@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './admin.css';
+import { supabase } from '../lib/supabase';
 
 const categoriasProducto = [
   'Pulseras',
@@ -10,6 +11,46 @@ const categoriasProducto = [
   'Regalos y combos',
 ];
 function Admin({ onVolver, productos, setProductos, categorias }) {
+  const [sesionIniciada, setSesionIniciada] = useState(false);
+  const [correo, setCorreo] = useState('');
+  const [contrasena, setContrasena] = useState('');
+  const [errorLogin, setErrorLogin] = useState('');
+  const [cargandoLogin, setCargandoLogin] = useState(false);
+  const iniciarSesion = async (e) => {
+    e.preventDefault();
+
+    setErrorLogin('');
+    setCargandoLogin(true);
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: correo,
+        password: contrasena,
+      });
+
+      if (error) {
+        throw new Error('El correo o la contraseña son incorrectos.');
+      }
+
+      const { data: administrador, error: errorAdmin } = await supabase
+        .from('admin_users')
+        .select('user_id')
+        .eq('user_id', data.user.id)
+        .maybeSingle();
+
+      if (errorAdmin || !administrador) {
+        await supabase.auth.signOut();
+        throw new Error('Esta cuenta no tiene permisos de administradora.');
+      }
+
+      setSesionIniciada(true);
+      setContrasena('');
+    } catch (error) {
+      setErrorLogin(error.message);
+    } finally {
+      setCargandoLogin(false);
+    }
+  };
   const [productoEditando, setProductoEditando] = useState(null);
   const editarProducto = (producto) => {
     setNuevoProducto({
@@ -56,7 +97,76 @@ function Admin({ onVolver, productos, setProductos, categorias }) {
     { id: 'pedidos', icono: '♡', nombre: 'Pedidos' },
     { id: 'configuracion', icono: '⚙', nombre: 'Configuración' },
   ];
+  if (!sesionIniciada) {
+    return (
+      <div className="login-admin">
+        <form className="login-admin-formulario" onSubmit={iniciarSesion}>
+          <img
+            src="/logo-entre-hilos.png"
+            alt="Entre Hilos"
+            className="login-admin-logo"
+          />
 
+          <span className="login-admin-etiqueta">
+            ENTRE HILOS · ADMINISTRACIÓN
+          </span>
+
+          <h1>¡Hola de nuevo! ♡</h1>
+
+          <p>
+            Inicia sesión para gestionar tus creaciones y mantener tu catálogo
+            al día.
+          </p>
+
+          <label htmlFor="correo-admin">
+            Correo electrónico
+          </label>
+
+          <input
+            id="correo-admin"
+            type="email"
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
+            placeholder="Tu correo electrónico"
+            autoComplete="username"
+            required
+          />
+
+          <label htmlFor="contrasena-admin">
+            Contraseña
+          </label>
+
+          <input
+            id="contrasena-admin"
+            type="password"
+            value={contrasena}
+            onChange={(e) => setContrasena(e.target.value)}
+            placeholder="Tu contraseña"
+            autoComplete="current-password"
+            required
+          />
+
+          {errorLogin && (
+            <p className="login-admin-error" role="alert">
+              {errorLogin}
+            </p>
+          )}
+
+          <button type="submit" disabled={cargandoLogin}>
+            {cargandoLogin ? 'Verificando acceso...' : 'Entrar al panel ♡'}
+          </button>
+
+          <button
+            type="button"
+            className="login-admin-volver"
+            onClick={onVolver}
+          >
+            ← Volver a la tienda
+          </button>
+        </form>
+      </div>
+    );
+  }
   return (
     <div className="admin-layout">
       <aside className="admin-sidebar">

@@ -444,3 +444,147 @@
     display: none;
   }
 }
+
+/* ========================================
+   INICIO DE SESIÓN - ENTRE HILOS
+======================================== */
+
+.login-admin {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  background: #fbf7f2;
+}
+
+.login-admin-formulario {
+  width: 100%;
+  max-width: 430px;
+  display: flex;
+  flex-direction: column;
+  padding: 42px 36px;
+  background: #ffffff;
+  border: 1px solid #eee4da;
+  border-radius: 22px;
+  box-shadow: 0 12px 40px rgba(65, 45, 35, 0.07);
+}
+
+.login-admin-logo {
+  width: 95px;
+  height: 95px;
+  object-fit: contain;
+  align-self: center;
+  margin-bottom: 20px;
+}
+
+.login-admin-etiqueta {
+  color: #9a7662;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.login-admin-formulario h1 {
+  color: #332923;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0 0 12px;
+}
+
+.login-admin-formulario>p {
+  color: #82756c;
+  font-size: 14px;
+  line-height: 1.7;
+  text-align: center;
+  margin: 0 0 26px;
+}
+
+.login-admin-formulario label {
+  color: #463a32;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.login-admin-formulario input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 14px;
+  margin-bottom: 20px;
+  border: 1px solid #e6dcd2;
+  border-radius: 10px;
+  background: #fffdfb;
+  color: #332923;
+  font: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.login-admin-formulario input:focus {
+  border-color: #b18b74;
+  box-shadow: 0 0 0 3px rgba(177, 139, 116, 0.13);
+}
+
+.login-admin-formulario>button[type='submit'] {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #49372e;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.login-admin-formulario>button[type='submit']:hover:not(:disabled) {
+  background: #6b5042;
+  transform: translateY(-1px);
+}
+
+.login-admin-formulario>button[type='submit']:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.login-admin-volver {
+  align-self: center;
+  margin-top: 22px;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  color: #8a7060;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.login-admin-volver:hover {
+  color: #49372e;
+}
+
+.login-admin-formulario .login-admin-error {
+  padding: 11px 12px;
+  margin: 0 0 18px;
+  border: 1px solid #f0c9c5;
+  border-radius: 8px;
+  background: #fff3f2;
+  color: #a3332b;
+  font-size: 13px;
+  text-align: left;
+}
+
+@media (max-width: 480px) {
+  .login-admin-formulario {
+    padding: 32px 23px;
+  }
+
+  .login-admin-formulario h1 {
+    font-size: 28px;
+  }
+}
