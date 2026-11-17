@@ -77,6 +77,10 @@ const categorias = [
   },
 ];
 function App() {
+  const [estadoContacto, setEstadoContacto] = useState({
+    tipo: "",
+    mensaje: "",
+  });
   // Carrito de compras
   const [carrito, setCarrito] = useState(() => {
 
@@ -852,9 +856,101 @@ function App() {
           por un accesorio personalizado. Estamos aquí para ayudarte.
         </p>
 
-        <a href="mailto:hola@entre-hilos.com" className="boton-principal">
-          Escríbenos por correo ↗
-        </a>
+        <form
+          className="formulario-contacto"
+          onSubmit={async (e) => {
+            e.preventDefault();
+
+            const formulario = e.currentTarget;
+            const datos = new FormData(formulario);
+
+            const consulta = {
+              nombre: datos.get("nombre"),
+              correo: datos.get("correo"),
+              asunto: datos.get("asunto"),
+              mensaje: datos.get("mensaje"),
+            };
+
+            setEstadoContacto({ tipo: "", mensaje: "" });
+
+            const { error } = await supabase
+              .from("consultas")
+              .insert([consulta]);
+
+            if (error) {
+              console.error("Error al guardar la consulta:", error);
+
+              setEstadoContacto({
+                tipo: "error",
+                mensaje:
+                  "No pudimos enviar tu consulta. Inténtalo nuevamente.",
+              });
+
+              return;
+            }
+
+            formulario.reset();
+
+            setEstadoContacto({
+              tipo: "exito",
+              mensaje:
+                "¡Tu consulta fue recibida! Gracias por escribirnos. ♡",
+            });
+          }}
+        >
+          <label htmlFor="contacto-nombre">Tu nombre</label>
+          <input
+            id="contacto-nombre"
+            name="nombre"
+            type="text"
+            placeholder="¿Cómo te llamas?"
+            autoComplete="name"
+            required
+          />
+
+          <label htmlFor="contacto-correo">Tu correo electrónico</label>
+          <input
+            id="contacto-correo"
+            name="correo"
+            type="email"
+            placeholder="tucorreo@ejemplo.com"
+            autoComplete="email"
+            required
+          />
+
+          <label htmlFor="contacto-asunto">¿Sobre qué quieres hablar?</label>
+          <select id="contacto-asunto" name="asunto" required defaultValue="">
+            <option value="" disabled>
+              Selecciona una opción
+            </option>
+            <option value="Consulta sobre productos">Consulta sobre productos</option>
+            <option value="Pedido personalizado">Pedido personalizado</option>
+            <option value="Consulta de precios">Consulta de precios</option>
+            <option value="Otra consulta">Otra consulta</option>
+          </select>
+
+          <label htmlFor="contacto-mensaje">Tu mensaje</label>
+          <textarea
+            id="contacto-mensaje"
+            name="mensaje"
+            rows="5"
+            placeholder="Cuéntanos qué tienes en mente..."
+            required
+          />
+
+          <button type="submit" className="boton-principal">
+            Preparar mi mensaje ↗
+          </button>
+        </form>
+        {estadoContacto.mensaje && (
+          <p
+            className={`mensaje-contacto ${estadoContacto.tipo}`}
+            role="status"
+            aria-live="polite"
+          >
+            {estadoContacto.mensaje}
+          </p>
+        )}
       </section>
 
       <footer className="pie-pagina">
