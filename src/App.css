@@ -1358,3 +1358,82 @@ a {
     font-size: 0.72rem;
   }
 }
+/* ===== CONTACTO ENTRE HILOS ===== */
+
+.contacto {
+  padding: 90px 24px;
+  text-align: center;
+  background: #f7eee8;
+  border-radius: 24px;
+  margin: 60px auto;
+  max-width: 1100px;
+  box-sizing: border-box;
+}
+
+.contacto .etiqueta {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: #a66c5d;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.contacto h2 {
+  margin: 0 auto 18px;
+  color: #212738;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.2;
+}
+
+.contacto h2 em {
+  color: #d86f65;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+}
+
+.contacto > p {
+  max-width: 500px;
+  margin: 0 auto 30px;
+  color: #71645d;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.contacto .boton-principal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 24px;
+  border-radius: 30px;
+  background: #212738;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.contacto .boton-principal:hover {
+  background: #d86f65;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .contacto {
+    margin: 35px 16px;
+    padding: 60px 20px;
+    border-radius: 18px;
+  }
+
+  .contacto > p {
+    font-size: 14px;
+  }
+
+  .contacto .boton-principal {
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+  }
+}

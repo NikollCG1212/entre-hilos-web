@@ -42,6 +42,23 @@ function Admin({ onVolver, productos, setProductos, categorias }) {
     };
 
     cargarPedidos();
+    async function actualizarEstadoPedido(id, nuevoEstado) {
+      const { error } = await supabase
+        .from('pedidos')
+        .update({ estado: nuevoEstado })
+        .eq('id', id);
+
+      if (error) {
+        alert('No se pudo actualizar el pedido.');
+        return;
+      }
+
+      setPedidos((actuales) =>
+        actuales.map((pedido) =>
+          pedido.id === id ? { ...pedido, estado: nuevoEstado } : pedido
+        )
+      );
+    }
   }, [mostrarPedidos]);
   const [sesionIniciada, setSesionIniciada] = useState(false);
   const [comprobandoSesion, setComprobandoSesion] = useState(true);
@@ -452,7 +469,19 @@ function Admin({ onVolver, productos, setProductos, categorias }) {
                     <p>Cliente: {pedido.nombre}</p>
                     <p>WhatsApp: {pedido.whatsapp}</p>
                     <p>Ciudad: {pedido.ciudad}</p>
-                    <p>Estado: {pedido.estado}</p>
+                    <div className="admin-pedido-estado">
+                      <label htmlFor={`estado-${pedido.id}`}>Estado del pedido:</label>
+                      <select
+                        id={`estado-${pedido.id}`}
+                        value={pedido.estado}
+                        onChange={(e) => actualizarEstadoPedido(pedido.id, e.target.value)}
+                      >
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En preparación">En preparación</option>
+                        <option value="Entregado">Entregado</option>
+                        <option value="Cancelado">Cancelado</option>
+                      </select>
+                    </div>
                     <p>
                       Total: {Number(pedido.total).toLocaleString('es-CO', {
                         style: 'currency',
