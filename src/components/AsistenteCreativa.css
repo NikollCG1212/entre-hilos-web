@@ -1,0 +1,488 @@
+.asistente-creativa {
+  max-width: 760px;
+  margin: 70px auto;
+  padding: 45px 30px;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #eadfd8;
+  border-radius: 22px;
+  text-align: center;
+}
+
+.asistente-creativa .etiqueta {
+  color: #a66c5d;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.asistente-creativa h2 {
+  margin: 18px 0;
+  color: #212738;
+  font-size: clamp(28px, 4vw, 40px);
+}
+
+.asistente-creativa h2 em {
+  color: #d86f65;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+}
+
+.asistente-descripcion {
+  max-width: 520px;
+  margin: 0 auto 28px;
+  color: #71645d;
+  line-height: 1.8;
+}
+
+.asistente-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+
+.asistente-formulario label {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  color: #212738;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.asistente-formulario select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ded2ca;
+  border-radius: 9px;
+  background: #fffdfb;
+  color: #212738;
+  font: inherit;
+  font-weight: 400;
+}
+
+.asistente-formulario select:focus {
+  outline: 2px solid #f97068;
+  outline-offset: 2px;
+}
+
+.asistente-boton {
+  padding: 14px 22px;
+  border: none;
+  border-radius: 30px;
+  background: #212738;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.asistente-boton:hover {
+  background: #d86f65;
+}
+
+.asistente-resultado {
+  margin-top: 28px;
+  padding: 24px;
+  border-radius: 14px;
+  background: #f7eee8;
+  text-align: left;
+}
+
+.asistente-resultado h3 {
+  margin-top: 0;
+  color: #212738;
+}
+
+.asistente-resultado p {
+  color: #625650;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.asistente-enlace {
+  display: inline-block;
+  margin-top: 10px;
+  color: #a64e47;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.asistente-enlace:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .asistente-creativa {
+    margin: 35px 16px;
+    padding: 30px 20px;
+  }
+}
+
+/* Tipografía del asistente creativo */
+
+.asistente-creativa h2,
+.asistente-resultado h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.asistente-creativa p,
+.asistente-formulario label,
+.asistente-formulario select,
+.asistente-boton,
+.asistente-enlace {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.asistente-formulario label {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.asistente-formulario select {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.asistente-boton {
+  font-size: 17px;
+  letter-spacing: 0.3px;
+}
+
+.asistente-resultado p {
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+/* =================================
+   CHAT ENTRE HILOS
+================================= */
+
+.chat-entre-hilos {
+  width: 100%;
+  max-width: 650px;
+  margin: 35px auto;
+  overflow: hidden;
+  background: #fffdfb;
+  border: 1px solid #eadfd8;
+  border-radius: 18px;
+  box-shadow: 0 12px 35px rgba(33, 39, 56, 0.07);
+  text-align: left;
+  box-sizing: border-box;
+}
+
+/* Encabezado */
+
+.chat-encabezado {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 20px 24px;
+  background: #f7eee8;
+  border-bottom: 1px solid #eadfd8;
+}
+
+.chat-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #fffdfb;
+  color: #d86f65;
+  font-size: 27px;
+}
+
+.chat-encabezado h3 {
+  margin: 0 0 5px;
+  color: #212738;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.chat-encabezado div:nth-child(2) span {
+  color: #78675f;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
+}
+
+.chat-indicador {
+  margin-left: auto;
+  color: #849b78;
+  font-size: 13px;
+}
+
+/* Área de conversación */
+
+.chat-mensajes {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 350px;
+  padding: 25px 20px;
+  overflow-y: auto;
+  background: #fffdfb;
+  box-sizing: border-box;
+}
+
+.chat-mensaje {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 85%;
+}
+
+.chat-mensaje p {
+  margin: 0;
+  padding: 13px 16px;
+  border-radius: 14px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.chat-asistente {
+  align-self: flex-start;
+}
+
+.chat-asistente p {
+  background: #f7eee8;
+  color: #51443e;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-corazon {
+  padding-top: 9px;
+  color: #d86f65;
+  font-size: 17px;
+}
+
+.chat-usuario {
+  align-self: flex-end;
+}
+
+.chat-usuario p {
+  background: #212738;
+  color: #fffdfb;
+  border-bottom-right-radius: 4px;
+}
+
+/* Campo para escribir */
+
+.chat-formulario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  background: #fff;
+  border-top: 1px solid #eadfd8;
+}
+
+.chat-formulario input {
+  flex: 1;
+  min-width: 0;
+  padding: 13px 15px;
+  border: 1px solid #ded2ca;
+  border-radius: 25px;
+  outline: none;
+  background: #fffdfb;
+  color: #212738;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+}
+
+.chat-formulario input:focus {
+  border-color: #d86f65;
+  box-shadow: 0 0 0 2px rgba(216, 111, 101, 0.12);
+}
+
+.chat-formulario input::placeholder {
+  color: #9b8b82;
+}
+
+.chat-formulario button {
+  padding: 13px 19px;
+  border: none;
+  border-radius: 25px;
+  background: #212738;
+  color: #fff;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.chat-formulario button:hover:not(:disabled) {
+  background: #d86f65;
+}
+
+.chat-formulario button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Nota inferior */
+
+.chat-nota {
+  margin: 0;
+  padding: 0 15px 18px;
+  background: #fff;
+  color: #897970;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Enlace de contacto */
+
+.asistente-creativa>.asistente-enlace {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+}
+
+/* Adaptación para celulares */
+
+@media (max-width: 600px) {
+  .chat-entre-hilos {
+    margin: 25px auto;
+    border-radius: 14px;
+  }
+
+  .chat-encabezado {
+    padding: 16px;
+  }
+
+  .chat-mensajes {
+    height: 320px;
+    padding: 20px 13px;
+  }
+
+  .chat-mensaje {
+    max-width: 94%;
+  }
+
+  .chat-mensaje p {
+    padding: 11px 13px;
+    font-size: 15px;
+  }
+
+  .chat-formulario {
+    gap: 7px;
+    padding: 12px 10px;
+  }
+
+  .chat-formulario input {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .chat-formulario button {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+/* Asistente creativa flotante */
+.asistente-flotante {
+  position: fixed;
+  right: 24px;
+  bottom: 100px;
+  z-index: 1001;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.boton-asistente-flotante {
+  position: fixed;
+  right: 28px;
+  bottom: 100px;
+  z-index: 1002;
+  width: 58px;
+  height: 58px;
+  border: none;
+  border-radius: 50%;
+  background: #d86f65;
+  color: #fffdfb;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 5px 18px rgba(33, 39, 56, 0.22);
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.boton-asistente-flotante:hover {
+  background: #212738;
+  transform: translateY(-3px);
+}
+
+.asistente-ventana {
+  position: absolute;
+  right: 0;
+  bottom: 72px;
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  height: 480px;
+  max-height: calc(100vh - 160px);
+  overflow: hidden;
+  border: 1px solid #eaded5;
+  border-radius: 20px;
+  background: #fffdfb;
+  box-shadow: 0 10px 35px rgba(33, 39, 56, 0.18);
+}
+
+.asistente-ventana .chat-encabezado {
+  flex-shrink: 0;
+}
+
+.asistente-ventana .chat-mensajes {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px;
+}
+
+.asistente-ventana .chat-formulario {
+  flex-shrink: 0;
+}
+
+.chat-cerrar {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: #fffdfb;
+  font-size: 27px;
+  cursor: pointer;
+}
+
+.asistente-ventana .chat-nota {
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .asistente-flotante {
+    right: 14px;
+    bottom: 88px;
+  }
+
+  .boton-asistente-flotante {
+    right: 18px;
+    bottom: 88px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .asistente-ventana {
+    width: calc(100vw - 28px);
+    max-width: 380px;
+    height: min(480px, calc(100dvh - 150px));
+  }
+}

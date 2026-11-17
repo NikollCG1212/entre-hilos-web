@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import Admin from './admin/admin.jsx';
 import { supabase } from './lib/supabase';
-
+import AsistenteCreativa from './components/AsistenteCreativa';
 const categorias = [
   {
     id: 'pulseras',
@@ -79,6 +79,7 @@ const categorias = [
 function App() {
   // Carrito de compras
   const [carrito, setCarrito] = useState(() => {
+
     try {
       const carritoGuardado = localStorage.getItem('entre-hilos-carrito');
       return carritoGuardado ? JSON.parse(carritoGuardado) : [];
@@ -86,6 +87,7 @@ function App() {
       return [];
     }
   });
+  const [productoAgregado, setProductoAgregado] = useState(null);
   useEffect(() => {
     localStorage.setItem(
       'entre-hilos-carrito',
@@ -214,6 +216,12 @@ function App() {
 
       return [...carritoActual, { ...producto, cantidad: 1 }];
     });
+
+    setProductoAgregado(producto.id);
+
+    setTimeout(() => {
+      setProductoAgregado(null);
+    }, 3000);
   };
   const [productos, setProductos] = useState([]);
   const [cargandoProductos, setCargandoProductos] = useState(true);
@@ -302,15 +310,21 @@ function App() {
           </button>
           <button
             type="button"
-            className="boton-carrito"
+            className="boton-carrito boton-carrito-flotante"
             onClick={() => setMostrarCarrito(true)}
-          >
-            Mi pedido (
-            {carrito.reduce(
+            aria-label={`Mi pedido, ${carrito.reduce(
               (total, producto) => total + producto.cantidad,
               0
-            )}
-            )
+            )} productos`}
+          >
+            🛍️
+
+            <span className="contador-carrito">
+              {carrito.reduce(
+                (total, producto) => total + producto.cantidad,
+                0
+              )}
+            </span>
           </button>
         </nav>
         {mostrarCarrito && (
@@ -770,6 +784,11 @@ function App() {
                           >
                             🛍️ Agregar al pedido
                           </button>
+                          {productoAgregado === producto.id && (
+                            <p className="mensaje-producto-agregado">
+                              ♡ ¡Agregado a tu pedido!
+                            </p>
+                          )}
                         </article>
                       ))}
                   </div>
@@ -800,39 +819,41 @@ function App() {
         <div className="esencia-simbolo">∞</div>
 
         <div>
-          <span className="etiqueta">MÁS QUE UN ACCESORIO</span>
+          <span className="etiqueta">LA ESENCIA DE ENTRE HILOS</span>
 
           <h2>
-            Tu idea también
+            Cada creación
             <br />
-            tiene un lugar <em>aquí.</em>
+            tiene algo <em>de ti.</em>
           </h2>
 
           <p>
-            En Entre Hilos creemos que los detalles más especiales
-            nacen cuando una idea se encuentra con las manos
-            correctas. Tú imaginas, nosotros creamos contigo.
+            Somos un emprendimiento de accesorios artesanales elaborados
+            con diferentes técnicas de tejido. Combinamos hilos, colores
+            y materiales para crear piezas que reflejan distintos estilos
+            y convierten los pequeños detalles en algo especial.
           </p>
 
-          <a href="#contacto" className="boton-principal">
-            Hagamos realidad tu idea ↗
+          <a href="#catalogo" className="boton-principal">
+            Explora nuestros diseños ↗
           </a>
         </div>
       </section>
-
+      <AsistenteCreativa />
       <section className="contacto" id="contacto">
-        <span className="etiqueta">ESTAMOS PARA ESCUCHARTE</span>
+        <span className="etiqueta">HABLEMOS</span>
 
         <h2>
-          ¿Ya tienes una idea <em>en mente?</em>
+          ¿Tienes alguna <em>duda?</em>
         </h2>
 
         <p>
-          Cuéntanos qué imaginas y empecemos a darle forma.
+          Consulta precios, conoce las opciones disponibles o pregúntanos
+          por un accesorio personalizado. Estamos aquí para ayudarte.
         </p>
 
         <a href="mailto:hola@entre-hilos.com" className="boton-principal">
-          Conversemos sobre tu idea ↗
+          Escríbenos por correo ↗
         </a>
       </section>
 
@@ -847,12 +868,31 @@ function App() {
 
         <p>Hecho a mano, pensado para ti. ♡</p>
 
+        <div className="redes-sociales">
+          <a
+            href="https://www.instagram.com/entre_hilosbaq/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visitar Instagram de Entre Hilos"
+          >
+            Instagram ↗
+          </a>
+
+          <a
+            href="https://wa.me/573000000000"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Contactar a Entre Hilos por WhatsApp"
+          >
+            WhatsApp ↗
+          </a>
+        </div>
+
         <a href="#inicio" className="volver-arriba">
           Volver arriba ↑
         </a>
       </footer>
-    </main >
+    </main>
   );
 }
-
 export default App;

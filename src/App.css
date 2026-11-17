@@ -1358,6 +1358,7 @@ a {
     font-size: 0.72rem;
   }
 }
+
 /* ===== CONTACTO ENTRE HILOS ===== */
 
 .contacto {
@@ -1392,7 +1393,7 @@ a {
   font-weight: 400;
 }
 
-.contacto > p {
+.contacto>p {
   max-width: 500px;
   margin: 0 auto 30px;
   color: #71645d;
@@ -1427,7 +1428,7 @@ a {
     border-radius: 18px;
   }
 
-  .contacto > p {
+  .contacto>p {
     font-size: 14px;
   }
 
@@ -1435,5 +1436,291 @@ a {
     width: 100%;
     max-width: 300px;
     box-sizing: border-box;
+  }
+}
+
+/* =====================================
+   FORMULARIO DE PEDIDOS - ENTRE HILOS
+===================================== */
+
+.formulario-pedido {
+  width: 100%;
+  max-width: 600px;
+  margin: 35px auto;
+  padding: 32px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  background: #fffdfb;
+  border: 1px solid #eadfd8;
+  border-radius: 20px;
+
+  box-shadow: 0 10px 30px rgba(33, 39, 56, 0.06);
+  text-align: left;
+}
+
+/* Etiquetas de los campos */
+
+.formulario-pedido label {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  color: #212738;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Campos de texto, selectores y áreas de texto */
+
+.formulario-pedido input,
+.formulario-pedido select,
+.formulario-pedido textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+
+  border: 1px solid #ded2ca;
+  border-radius: 10px;
+
+  background: #fffdfb;
+  color: #212738;
+
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+  font-weight: 400;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Área para escribir indicaciones */
+
+.formulario-pedido textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Texto de ejemplo */
+
+.formulario-pedido input::placeholder,
+.formulario-pedido textarea::placeholder {
+  color: #9b8b82;
+  opacity: 1;
+}
+
+/* Efecto al seleccionar un campo */
+
+.formulario-pedido input:focus,
+.formulario-pedido select:focus,
+.formulario-pedido textarea:focus {
+  outline: none;
+  border-color: #d86f65;
+  box-shadow: 0 0 0 3px rgba(216, 111, 101, 0.12);
+}
+
+/* Botón para continuar con el pedido */
+
+.formulario-pedido button {
+  width: 100%;
+  padding: 15px 22px;
+
+  border: none;
+  border-radius: 30px;
+
+  background: #212738;
+  color: #fffdfb;
+
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 17px;
+  font-weight: 400;
+
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.formulario-pedido button:hover {
+  background: #d86f65;
+  transform: translateY(-2px);
+}
+
+.formulario-pedido button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Adaptación a celulares */
+
+@media (max-width: 600px) {
+  .formulario-pedido {
+    width: calc(100% - 28px);
+    margin: 25px auto;
+    padding: 22px 18px;
+    gap: 17px;
+    border-radius: 16px;
+  }
+
+  .formulario-pedido label {
+    font-size: 15px;
+  }
+
+  .formulario-pedido input,
+  .formulario-pedido select,
+  .formulario-pedido textarea {
+    font-size: 16px;
+  }
+}
+
+/* Botón para agregar productos al pedido */
+
+.boton-agregar-carrito {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 13px 18px;
+  border: 1px solid #212738;
+  border-radius: 30px;
+  background: #212738;
+  color: #fffdfb;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.boton-agregar-carrito:hover {
+  background: #d86f65;
+  border-color: #d86f65;
+  transform: translateY(-2px);
+}
+
+.boton-agregar-carrito:active {
+  transform: scale(0.98);
+}
+
+.mensaje-producto-agregado {
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #f7eee8;
+  color: #52634a;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 15px;
+  text-align: center;
+  animation: aparecer-mensaje 0.25s ease;
+}
+
+@keyframes aparecer-mensaje {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Carrito flotante de Entre Hilos */
+.boton-carrito-flotante {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 50px;
+  background: #212738;
+  color: #fffdfb;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 5px 18px rgba(33, 39, 56, 0.22);
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.boton-carrito-flotante:hover {
+  background: #d86f65;
+  transform: translateY(-3px);
+}
+
+.contador-carrito {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 23px;
+  height: 23px;
+  padding: 0 5px;
+  border-radius: 50%;
+  background: #fffdfb;
+  color: #212738;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .boton-carrito-flotante {
+    right: 14px;
+    bottom: 18px;
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+}
+
+/* Redes sociales de Entre Hilos */
+.redes-sociales {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 24px 0;
+}
+
+.redes-sociales a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 125px;
+  padding: 12px 22px;
+  border: 1px solid #e8d9cf;
+  border-radius: 30px;
+  background: #fffdfb;
+  color: #212738;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.redes-sociales a:hover {
+  background: #f7eee8;
+  border-color: #d86f65;
+  color: #b85e55;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 14px rgba(33, 39, 56, 0.08);
+}
+
+@media (max-width: 600px) {
+  .redes-sociales {
+    gap: 10px;
+  }
+
+  .redes-sociales a {
+    min-width: 115px;
+    padding: 11px 16px;
   }
 }
